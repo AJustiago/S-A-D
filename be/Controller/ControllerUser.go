@@ -8,14 +8,7 @@ import (
 	repo "hackjakarta/Repository/users"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
 )
-
-var validate *validator.Validate
-
-func init() {
-	validate = validator.New()
-}
 
 func DetailUser(c *gin.Context) {
 	idParam := c.Param("id")
