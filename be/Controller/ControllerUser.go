@@ -10,6 +10,7 @@ import (
 	utils "hackjakarta/Utils"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func DetailUser(c *gin.Context) {
@@ -54,7 +55,7 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	if exist {
-		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": "Email already regostered"})
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": "Email already registered"})
 		return
 	}
 
@@ -70,6 +71,15 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
+	// Hash the password
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.DefaultCost)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	params.Password = string(hashedPassword)
+
 	res, err := repo.RegisterUser(params)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
@@ -82,4 +92,40 @@ func RegisterUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "success", "message": "User registered successfully"})
+}
+
+func LoginUser(c *gin.Context) {
+	var params Dto.LoginUser
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	// Validasi input menggunakan validator
+	if err := utils.Validate.Struct(params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	user, err := repo.GetUserByUsername(params.Username)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"status": "error", "message": "Invalid username or password"})
+		return
+	}
+
+	// Compare Password
+	err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(params.Password))
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"status": "error", "message": "Invalid username or password"})
+		return
+	}
+
+	// Generate JWT token and return it
+	token, err := utils.GenerateJWT(user.Id)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to generate token"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "token": token})
 }
