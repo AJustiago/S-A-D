@@ -25,27 +25,24 @@ func main() {
 
 	Config.ConnectDatabase()
 
-	api := route.Group("/hackjakarta")
+	// User API
+	user := route.Group("/user")
 	{
-		// User API
-		user := api.Group("/user")
-		{
-			user.GET("/:id", Controller.DetailUser)
-			user.POST("/register", Controller.RegisterUser)
-			user.POST("/login", Controller.LoginUser)
-		}
+		user.GET("/:id", Controller.DetailUser)
+		user.POST("/register", Controller.RegisterUser)
+		user.POST("/login", Controller.LoginUser)
+	}
 
-		// Forum API
-		forum := api.Group("/forum")
-		{
-			forum.GET("/:id", Controller.DetailForum)
-			forum.GET("/reply/:id", Controller.DetailReplies)
+	// Forum API
+	forum := route.Group("/forum")
+	{
+		forum.GET("/:id", Controller.DetailForum)
+		forum.GET("/reply/:id", Controller.DetailReplies)
 
-			forum.Use(middleware.JWTAuthMiddleware())
-			{
-				forum.POST("/", Controller.CreateForum)
-				forum.POST("/reply", Controller.CreateReply)
-			}
+		forum.Use(middleware.JWTAuthMiddleware())
+		{
+			forum.POST("/", Controller.CreateForum)
+			forum.POST("/reply", Controller.CreateReply)
 		}
 	}
 
