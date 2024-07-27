@@ -1,5 +1,4 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
@@ -11,7 +10,6 @@ const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
   return (
-    <NavigationContainer>
       <Tab.Navigator initialRouteName='Map'>
         <Tab.Screen
           name="Forum"
@@ -44,7 +42,6 @@ const MainNavigator = () => {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 

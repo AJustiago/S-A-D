@@ -1,8 +1,8 @@
-import {View, Text, StyleSheet} from 'react-native';
-import React, {useRef, useState} from 'react';
-import {Dropdown} from 'react-native-element-dropdown';
-import OnlineMap from '../components/maps/OnlineMap';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 import DummyMap from '../components/maps/DummyMap';
+import OnlineMap from '../components/maps/OnlineMap';
 
 const data = [
   {label: '1st floor', value: '1'},
@@ -10,7 +10,7 @@ const data = [
 ];
 
 const MapScreen = () => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>('2');
   const renderMap = () => {
     return (
       <View style={{height: '100%'}}>
