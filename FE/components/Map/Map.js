@@ -1,12 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import NavBar from '../NavBar/NavBar';
 
 const Map = ({ changePage }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>This is Map</Text>
-      <NavBar changePage={changePage} />
     </View>
   );
 };
