@@ -1,18 +1,37 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
+import Forum from './components/Forum/Forum';
+import Map from './components/Map/Map';
 import NavBar from './components/NavBar/NavBar';
-import MapScreen from './components/Map/Map';
+import Profile from './components/Profile/Profile';
 
-export default class TestNavBar extends React.Component {
+export default class App extends React.Component {
+  state = {
+    currentPage: 'Map', // Default page
+  };
+
   changePage = (screen) => {
-    console.log(screen + ' has been pressed');
+    this.setState({ currentPage: screen });
+  };
+
+  renderPage() {
+    switch (this.state.currentPage) {
+      case 'Profile':
+        return <Profile />;
+      case 'Map':
+        return <Map />;
+      case 'Forum':
+        return <Forum />;
+      default:
+        return <Map />;
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <MapScreen />
-        {/* <NavBar changePage={this.changePage} /> */}
+        <NavBar changePage={this.changePage} />
+        {this.renderPage()}
       </View>
     );
   }
