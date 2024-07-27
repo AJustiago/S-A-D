@@ -1,4 +1,4 @@
-package com.mobiletest
+package com.eden.app
 
 import android.app.Application
 import com.facebook.react.PackageList

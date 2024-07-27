@@ -12,22 +12,16 @@ const data = [
 const MapScreen = () => {
   const [value, setValue] = useState<string>();
   const renderMap = () => {
-    switch (value) {
-      case '1':
-        console.log('Rendering Online Map');
-        return (
-          <View style={{height: '100%'}}>
-            <OnlineMap />
-          </View>
-        );
-      case '2':
-        console.log('Rendering Dummy Map');
-        return (
-          <View style={{height: '100%'}}>
-            <DummyMap />
-          </View>
-        );
-    }
+    return (
+      <View style={{height: '100%'}}>
+        <View style={{height: '100%', display: (value == '1' ? 'flex' : 'none')}}>
+          <OnlineMap />
+        </View>
+        <View style={{height: '100%', display: (value == '2' ? 'flex' : 'none')}}>
+          <DummyMap />
+        </View>
+      </View>
+    );
   };
 
   return (
