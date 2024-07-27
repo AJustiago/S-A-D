@@ -1,0 +1,5 @@
+# Context Folder
+
+This directory contains files related to managing global state using the React Context API. 
+
+Contexts are used to share state across multiple components without having to pass props manually through each level of the component tree.
