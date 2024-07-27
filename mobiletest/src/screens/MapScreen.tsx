@@ -1,19 +1,98 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { MiMapView, TGetVenueOptions } from '@mappedin/react-native-sdk';
+import {View, Text, StyleSheet} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Dropdown} from 'react-native-element-dropdown';
+import OnlineMap from '../components/maps/OnlineMap';
+import DummyMap from '../components/maps/DummyMap';
 
-const venueOptions: TGetVenueOptions = {
-  venue: 'mappedin-demo-mall',
-  clientId: '5eab30aa91b055001a68e996',
-  clientSecret: 'RJyRXKcryCMy4erZqqCbuB1NbR66QTGNXVE0x3Pg6oCIlUR1',
-};
+const data = [
+  {label: '1st floor', value: '1'},
+  {label: '2nd floor', value: '2'},
+];
 
 const MapScreen = () => {
-  return (
-    <View style={{flex: 1}}>
-      <MiMapView style={{flex: 1}} key="mappedin" options={venueOptions} />
-    </View>
-  )
-}
+  const [value, setValue] = useState<string>();
+  const renderMap = () => {
+    switch (value) {
+      case '1':
+        console.log('Rendering Online Map');
+        return (
+          <View style={{height: '100%'}}>
+            <OnlineMap />
+          </View>
+        );
+      case '2':
+        console.log('Rendering Dummy Map');
+        return (
+          <View style={{height: '100%'}}>
+            <DummyMap />
+          </View>
+        );
+    }
+  };
 
-export default MapScreen
+  return (
+    <View>
+      {renderMap()}
+      <Dropdown
+        style={[styles.dropdown]}
+        placeholderStyle={styles.placeholderStyle}
+        selectedTextStyle={styles.selectedTextStyle}
+        iconStyle={styles.iconStyle}
+        data={data}
+        autoScroll
+        maxHeight={300}
+        minHeight={100}
+        labelField="label"
+        valueField="value"
+        value={value}
+        onChange={item => {
+          setValue(item.value);
+        }}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  dropdown: {
+    backgroundColor: 'white',
+    position: 'absolute',
+    top: 50, // Adjust as needed
+    left: 16, // Adjust as needed
+    right: 16, // Adjust as needed
+    height: 50,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 16,
+    marginHorizontal: 72,
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+});
+
+export default MapScreen;
