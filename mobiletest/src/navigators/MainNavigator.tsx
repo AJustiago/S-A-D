@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const MainNavigator = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
+      <Tab.Navigator initialRouteName='Map'>
         <Tab.Screen
           name="Forum"
           component={ForumScreen}
