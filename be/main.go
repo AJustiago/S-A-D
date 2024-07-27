@@ -28,6 +28,12 @@ func main() {
 	{
 		// User API
 		api.GET("/user/:id", Controller.DetailUser)
+		api.POST("/user/register", Controller.RegisterUser)
+		api.POST("/user/login", Controller.LoginUser)
+
+		// Forum API
+		api.GET("/forum/:id", Controller.DetailForum)
+		api.GET("/forum/reply/:id", Controller.DetailReplies)
 	}
 
 	route.Run()
