@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
-import Card from '../components/ForumCard';
+import Card from '../components/Forum/ForumCard';
 import { fetchForumData, ForumPost } from '../services/ForumServices';
 
 const ForumScreen: React.FC = () => {

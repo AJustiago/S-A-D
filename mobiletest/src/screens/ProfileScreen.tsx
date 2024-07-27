@@ -1,81 +1,58 @@
-import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Button, Text, View } from 'react-native';
+import { getUserDetails, loginUser, registerUser } from '../services/ProfileServices';
 
-const getRandomProfileImage = () => {
-  const images = [
-    require('../assets/profile-1.jpeg'),
-    require('../assets/profile-2.jpeg'),
-    require('../assets/profile-3.jpeg'),
-  ];
-  const randomNumber = Math.floor(Math.random() * images.length);
-  return images[randomNumber];
-};
 const ProfileScreen = () => {
-  const profileImageSource = getRandomProfileImage();
+  const [user, setUser] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const token = await AsyncStorage.getItem('jwt');
+        if (!token) {
+          navigation.navigate('Login');
+          return;
+        }
+        const userData = await getUserDetails('1');
+        setUser(userData);
+      } catch (error) {
+        setError('Failed to fetch user details');
+        navigation.navigate('Login');
+      }
+    };
+
+    fetchUserDetails();
+  }, [navigation]);
+
+  const handleLogin = async () => {
+    try {
+      const response = await loginUser({ email: 'user@example.com', password: 'password123' });
+      console.log('Login response:', response);
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  const handleRegister = async () => {
+    try {
+      const response = await registerUser({ email: 'newuser@example.com', password: 'password123', name: 'New User' });
+      console.log('Registration response:', response);
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Profile</Text>
-      <View style={styles.profileContainer}>
-        <Image source={profileImageSource} style={styles.profileImage} />
-        <View style={styles.infoContainer}>
-          <Text style={styles.username}>Username</Text>
-          <Text style={styles.email}>email@example.com</Text>
-          <Text style={styles.bio}>This is a bio text.</Text>
-        </View>
-      </View>
+    <View>
+      <Button title="Login" onPress={handleLogin} />
+      <Button title="Register" onPress={handleRegister} />
+      {user ? <Text>{JSON.stringify(user)}</Text> : error ? <Text>{error}</Text> : <Text>Loading...</Text>}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 10,
-  },
-  headerText: {
-    marginTop: 10,
-    color: '#000',
-    alignItems: 'center',
-    padding: 5,
-    marginLeft: 10,
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  profileContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    padding: 20,
-    borderColor: 'black',
-    borderWidth: 1,
-    borderRadius: 10,
-    margin: 10,
-  },
-  profileImage: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    marginRight: 20,
-    marginTop: 5,
-  },
-  infoContainer: {
-    flex: 1,
-  },
-  username: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  email: {
-    fontSize: 16,
-    color: 'gray',
-    marginBottom: 8,
-  },
-  bio: {
-    fontSize: 14,
-    color: 'darkgray',
-  },
-});
 
 export default ProfileScreen;
