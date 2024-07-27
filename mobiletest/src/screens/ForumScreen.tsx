@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/ForumCard';
 import { fetchForumData, ForumPost } from '../services/ForumServices';
 
-const ForumScreen: React.FC = () => {
+const ForumScreen: React.FC = ({navigation}) => {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>('');
   const [data, setData] = useState<ForumPost[]>([]);
@@ -43,6 +43,7 @@ const ForumScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <Button onPress={() => navigation.navigate('Panic')} title="(TEMP) Test Panic Screen"/>
       <Text style={styles.headerText}>Forum Discussion</Text>
       <View style={styles.header}>
         <View style={styles.searchContainer}>

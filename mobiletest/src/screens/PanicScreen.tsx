@@ -42,7 +42,7 @@ const PanicScreen = ({navigation}) => {
           borderRadius: 8,
         }}
         onPress={() => {
-          navigation.navigate('Main');
+          navigation.pop();
         }}>
         <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
           Find Exit

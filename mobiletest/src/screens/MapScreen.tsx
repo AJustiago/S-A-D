@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
-import DummyMap from '../components/maps/DummyMap';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Dropdown} from 'react-native-element-dropdown';
 import OnlineMap from '../components/maps/OnlineMap';
+import DummyMap from '../components/maps/DummyMap';
+import { NavigationProp } from '@react-navigation/native';
 
 const data = [
   {label: '1st floor', value: '1'},
   {label: '2nd floor', value: '2'},
 ];
 
-const MapScreen = () => {
+const MapScreen: React.FC<{navigation: NavigationProp<any>}> = ({navigation}) => {
   const [value, setValue] = useState<string>('2');
   const renderMap = () => {
     return (

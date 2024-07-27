@@ -12,8 +12,8 @@ const dummyData: ForumPost[] = [
 {
     username: 'A',
     id: 1,
-    title: 'What is React Native?',
-    description: 'React Native is a popular framework for building mobile applications using React.',
+    title: 'Stairwell door stuck',
+    description: 'Emergency stairwell door in tower C is stuck.',
     upCount: 1,
     downCount: 2,
     count: 3,
@@ -21,7 +21,7 @@ const dummyData: ForumPost[] = [
 {
     username: 'A',
     id: 2,
-    title: 'How to use Hooks in React?',
+    title: 'Missing fire extinguisher',
     description: 'Hooks are a new feature in React that let you use state and other React features without writing a class.',
     upCount: 1,
     downCount: 2,
@@ -30,7 +30,7 @@ const dummyData: ForumPost[] = [
 {
     username: 'A',
     id: 3,
-    title: 'Understanding Redux',
+    title: '',
     description: 'Redux is a predictable state container for JavaScript apps, commonly used with React.',
     upCount: 1,
     downCount: 2,
