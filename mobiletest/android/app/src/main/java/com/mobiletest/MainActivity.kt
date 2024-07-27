@@ -28,7 +28,7 @@ class MainActivity : ReactActivity() {
   var isOnNewIntent: Boolean = false
 
   fun FullScreenPropsEmitter(intent: Intent) {
-    val main = intent.getStringExtra("STRING_I_NEED")
+    val main = intent.getStringExtra("String_I_need")
     val map: WritableMap = Arguments.createMap()
     map.putString("props", main)
     try {
@@ -36,22 +36,12 @@ class MainActivity : ReactActivity() {
         DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
       )?.emit("notificationHandle", map)
     } catch (e: Exception) {
-      Log.e("RNMAINACTIVITYTESTING", "Error: " + e.message)
+      Log.e("Testing", "Error: " + e.message)
     }
-  }
-
-  override fun onNewIntent(intent: Intent) {
-    super.onNewIntent(intent)
-    isOnNewIntent = true
-    FullScreenPropsEmitter(intent)
   }
 
   override fun onStart() {
     super.onStart()
-    if (isOnNewIntent) {
-      // Do something if needed
-    } else {
-      FullScreenPropsEmitter(intent)
-    }
+    FullScreenPropsEmitter(intent)
   }
 }

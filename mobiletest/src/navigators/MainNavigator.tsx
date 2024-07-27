@@ -1,18 +1,26 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {View, Text, PermissionsAndroid, Alert} from 'react-native';
+import React, { useEffect } from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MapScreen from '../screens/MapScreen';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import ForumScreen from '../screens/ForumScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import messaging from '@react-native-firebase/messaging';
+import { checkToken } from '../services/FcmToken';
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {
+  useEffect(() => {
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
+    checkToken();
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+    });
+    return unsubscribe;
+  }, []);
   return (
-    <NavigationContainer>
       <Tab.Navigator initialRouteName='Map'>
         <Tab.Screen
           name="Forum"
@@ -45,7 +53,6 @@ const MainNavigator = () => {
           }}
         />
       </Tab.Navigator>
-    </NavigationContainer>
   );
 };
 
