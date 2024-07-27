@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "330354439333",
+    "project_id": "angelhack-5f696",
+    "storage_bucket": "angelhack-5f696.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:330354439333:android:28cc6de886010c6b12094c",
+        "android_client_info": {
+          "package_name": "com.eden.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIStylFlkerk70ZQrp6E966VBF1bNtpeY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
