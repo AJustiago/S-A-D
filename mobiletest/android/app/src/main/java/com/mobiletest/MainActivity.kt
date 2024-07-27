@@ -1,9 +1,14 @@
 package com.eden.app
 
+import android.content.Intent
+import android.util.Log
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.WritableMap
+import com.facebook.react.modules.core.DeviceEventManagerModule
 
 class MainActivity : ReactActivity() {
 
@@ -15,8 +20,38 @@ class MainActivity : ReactActivity() {
 
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]
-   * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
+   * which allows you to enable New Architecture with a single boolean flag [fabricEnabled]
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
       DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+
+  var isOnNewIntent: Boolean = false
+
+  fun FullScreenPropsEmitter(intent: Intent) {
+    val main = intent.getStringExtra("STRING_I_NEED")
+    val map: WritableMap = Arguments.createMap()
+    map.putString("props", main)
+    try {
+      getReactInstanceManager().currentReactContext?.getJSModule(
+        DeviceEventManagerModule.RCTDeviceEventEmitter::class.java
+      )?.emit("notificationHandle", map)
+    } catch (e: Exception) {
+      Log.e("RNMAINACTIVITYTESTING", "Error: " + e.message)
+    }
+  }
+
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    isOnNewIntent = true
+    FullScreenPropsEmitter(intent)
+  }
+
+  override fun onStart() {
+    super.onStart()
+    if (isOnNewIntent) {
+      // Do something if needed
+    } else {
+      FullScreenPropsEmitter(intent)
+    }
+  }
 }
