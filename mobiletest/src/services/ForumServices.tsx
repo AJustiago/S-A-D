@@ -1,4 +1,14 @@
-const dummyData: any[] = [
+export interface ForumPost {
+    username: string;
+    id: number;
+    title: string;
+    description: string;
+    upCount: number,
+    downCount: number,
+    count: number;
+}
+
+const dummyData: ForumPost[] = [
 {
     username: 'A',
     id: 1,
