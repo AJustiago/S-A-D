@@ -3,7 +3,6 @@ package Controller
 import (
 	"database/sql"
 	"net/http"
-	"strconv"
 
 	"hackjakarta/Dto"
 	repo "hackjakarta/Repository/users"
@@ -14,12 +13,14 @@ import (
 )
 
 func DetailUser(c *gin.Context) {
-	idParam := c.Param("id")
-	id, err := strconv.ParseInt(idParam, 10, 64)
-	if err != nil {
-		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"status": "error", "message": "Invalid ID format"})
+	// Get userId from jwt middleware
+	userId, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to get user Id"})
 		return
 	}
+
+	id := userId.(int64)
 
 	detail, err := repo.DetailUser(id)
 	if err != nil {

@@ -28,7 +28,10 @@ func main() {
 	// User API
 	user := route.Group("/user")
 	{
-		user.GET("/:id", Controller.DetailUser)
+		user.Use(middleware.JWTAuthMiddleware())
+		{
+			user.GET("/", Controller.DetailUser)
+		}
 		user.POST("/register", Controller.RegisterUser)
 		user.POST("/login", Controller.LoginUser)
 	}
