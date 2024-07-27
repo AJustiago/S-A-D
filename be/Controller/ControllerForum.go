@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"hackjakarta/Dto"
 	repo "hackjakarta/Repository/forums"
+	utils "hackjakarta/Utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -62,4 +64,76 @@ func DetailReplies(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"status": "success", "replies": detail})
+}
+
+func CreateForum(c *gin.Context) {
+	var params Dto.CreateForum
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	// Input validation with validator
+	if err := utils.Validate.Struct(params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	// Get userId from jwt middleware
+	userId, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to get user Id"})
+		return
+	}
+
+	params.UserId = userId.(int64)
+
+	result, err := repo.CreateForum(params)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	if !result {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to create forum"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "message": "Forum created successfully"})
+}
+
+func CreateReply(c *gin.Context) {
+	var params Dto.CreateReply
+	if err := c.ShouldBindJSON(&params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	// Input validation with validator
+	if err := utils.Validate.Struct(params); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	// Get userId from jwt middleware
+	userId, exists := c.Get("userId")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to get userId"})
+		return
+	}
+
+	params.UserId = userId.(int64)
+
+	result, err := repo.CreateReply(params)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
+		return
+	}
+
+	if !result {
+		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": "Failed to create forum"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "message": "Forum created successfully"})
 }

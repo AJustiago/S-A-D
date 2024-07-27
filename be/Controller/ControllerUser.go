@@ -41,13 +41,13 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	// Validasi input menggunakan validator
+	// Input validation with validator
 	if err := utils.Validate.Struct(params); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
 		return
 	}
 
-	// Validasi unique email
+	// Unique email validation
 	exist, err := repo.CheckEmail(params.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
@@ -59,7 +59,7 @@ func RegisterUser(c *gin.Context) {
 		return
 	}
 
-	// Validasi unique username
+	// Unique username validation
 	exist, err = repo.CheckUsername(params.Username)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
@@ -101,7 +101,7 @@ func LoginUser(c *gin.Context) {
 		return
 	}
 
-	// Validasi input menggunakan validator
+	// Input validation with validator
 	if err := utils.Validate.Struct(params); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"status": "error", "message": err.Error()})
 		return

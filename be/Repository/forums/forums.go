@@ -2,6 +2,7 @@ package forums
 
 import (
 	Config "hackjakarta/Config"
+	"hackjakarta/Dto"
 )
 
 func DetailForum(id int64) (result Forum, err error) {
@@ -11,7 +12,8 @@ func DetailForum(id int64) (result Forum, err error) {
 						A.content,
 						A.building,
 						A.user_id,
-						A.created_time
+						A.created_time,
+						(SELECT COUNT(*) FROM replies A1 WHERE A1.forum_id = A.id AND A1.reply_id IS NULL) AS reply_count
 					FROM public.forums A 
 					WHERE A.id = $1`
 
@@ -24,6 +26,7 @@ func DetailForum(id int64) (result Forum, err error) {
 		&result.Building,
 		&result.UserId,
 		&result.CreatedTime,
+		&result.ReplyCount,
 	); err != nil {
 		return
 	}
@@ -105,4 +108,74 @@ func DetailReplies(replyId int64) (result []ForumReply, err error) {
 	}
 
 	return
+}
+
+func CreateForum(params Dto.CreateForum) (result bool, err error) {
+	const query = `INSERT INTO public.forums (
+						title,
+						content,
+						building,
+						user_id
+					)
+					VALUES ($1, $2, $3, $4)`
+
+	tx, err := Config.DB.Begin()
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+		} else {
+			err = tx.Commit()
+		}
+	}()
+
+	_, err = tx.Exec(
+		query,
+		params.Title,
+		params.Content,
+		params.Building,
+		params.UserId,
+	)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func CreateReply(params Dto.CreateReply) (result bool, err error) {
+	const query = `INSERT INTO public.replies (
+						forum_id,
+						reply_id,
+						content,
+						user_id
+					)
+					VALUES ($1, $2, $3, $4)`
+
+	tx, err := Config.DB.Begin()
+	if err != nil {
+		return false, err
+	}
+	defer func() {
+		if err != nil {
+			tx.Rollback()
+		} else {
+			err = tx.Commit()
+		}
+	}()
+
+	_, err = tx.Exec(
+		query,
+		params.ForumId,
+		params.ReplyId,
+		params.Content,
+		params.UserId,
+	)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }

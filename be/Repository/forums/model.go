@@ -9,6 +9,7 @@ type Forum struct {
 	Building    string       `json:"building"`
 	UserId      int64        `json:"userId"`
 	CreatedTime time.Time    `json:"createdTime"`
+	ReplyCount  int16        `json:"replyCount"`
 	Replies     []ForumReply `json:"replies"`
 }
 

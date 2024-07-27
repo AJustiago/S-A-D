@@ -5,6 +5,7 @@ import (
 
 	Config "hackjakarta/Config"
 	Controller "hackjakarta/Controller"
+	"hackjakarta/middleware"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -27,14 +28,26 @@ func main() {
 	api := route.Group("/hackjakarta")
 	{
 		// User API
-		api.GET("/user/:id", Controller.DetailUser)
-		api.POST("/user/register", Controller.RegisterUser)
-		api.POST("/user/login", Controller.LoginUser)
+		user := api.Group("/user")
+		{
+			user.GET("/:id", Controller.DetailUser)
+			user.POST("/register", Controller.RegisterUser)
+			user.POST("/login", Controller.LoginUser)
+		}
 
 		// Forum API
-		api.GET("/forum/:id", Controller.DetailForum)
-		api.GET("/forum/reply/:id", Controller.DetailReplies)
+		forum := api.Group("/forum")
+		{
+			forum.GET("/:id", Controller.DetailForum)
+			forum.GET("/reply/:id", Controller.DetailReplies)
+
+			forum.Use(middleware.JWTAuthMiddleware())
+			{
+				forum.POST("/", Controller.CreateForum)
+				forum.POST("/reply", Controller.CreateReply)
+			}
+		}
 	}
 
-	route.Run()
+	route.Run(":8080")
 }
