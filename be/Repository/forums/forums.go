@@ -12,9 +12,11 @@ func DetailForum(id int64) (result Forum, err error) {
 						A.content,
 						A.building,
 						A.user_id,
+						B.username,
 						A.created_time,
 						(SELECT COUNT(*) FROM replies A1 WHERE A1.forum_id = A.id AND A1.reply_id IS NULL) AS reply_count
 					FROM public.forums A 
+					JOIN users B ON A.user_id = B.id
 					WHERE A.id = $1`
 
 	row := Config.DB.QueryRow(query, id)
@@ -25,6 +27,7 @@ func DetailForum(id int64) (result Forum, err error) {
 		&result.Content,
 		&result.Building,
 		&result.UserId,
+		&result.Username,
 		&result.CreatedTime,
 		&result.ReplyCount,
 	); err != nil {
@@ -42,9 +45,11 @@ func DetailForumReplies(forumId int64) (result []ForumReply, err error) {
 						A.reply_id,
 						A.content,
 						A.user_id,
+						B.username,
 						A.created_time,
 						(SELECT COUNT(*) FROM replies A1 WHERE A1.reply_id = A.id) AS reply_count
 					FROM public.replies A
+					JOIN users B ON A.user_id = B.id
 					WHERE A.forum_id = $1 AND A.reply_id IS NULL
 					ORDER BY A.created_time DESC`
 	rows, err := Config.DB.Query(query, forumId)
@@ -61,6 +66,7 @@ func DetailForumReplies(forumId int64) (result []ForumReply, err error) {
 			&replyData.ReplyId,
 			&replyData.Content,
 			&replyData.UserId,
+			&replyData.Username,
 			&replyData.CreatedTime,
 			&replyData.ReplyCount,
 		); err != nil {

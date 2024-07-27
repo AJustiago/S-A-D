@@ -8,6 +8,7 @@ type Forum struct {
 	Content     string       `json:"content"`
 	Building    string       `json:"building"`
 	UserId      int64        `json:"userId"`
+	Username    string       `json:"username"`
 	CreatedTime time.Time    `json:"createdTime"`
 	ReplyCount  int16        `json:"replyCount"`
 	Replies     []ForumReply `json:"replies"`
@@ -19,6 +20,7 @@ type ForumReply struct {
 	ReplyId     *int64    `json:"replyId"`
 	Content     string    `json:"content"`
 	UserId      int64     `json:"userId"`
+	Username    string    `json:"username"`
 	CreatedTime time.Time `json:"createdTime"`
 	ReplyCount  int16     `json:"replyCount"`
 }
