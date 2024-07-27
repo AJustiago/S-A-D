@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import NavBar from './components/NavBar/NavBar';
+import MapScreen from './components/Map/Map';
 
 export default class TestNavBar extends React.Component {
   changePage = (screen) => {
@@ -10,7 +11,8 @@ export default class TestNavBar extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <NavBar changePage={this.changePage} />
+        <MapScreen />
+        {/* <NavBar changePage={this.changePage} /> */}
       </View>
     );
   }
