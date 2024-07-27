@@ -36,6 +36,7 @@ func main() {
 	// Forum API
 	forum := route.Group("/forum")
 	{
+		forum.GET("/", Controller.BrowseForum)
 		forum.GET("/:id", Controller.DetailForum)
 		forum.GET("/reply/:id", Controller.DetailReplies)
 

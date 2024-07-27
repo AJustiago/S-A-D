@@ -12,6 +12,25 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func BrowseForum(c *gin.Context) {
+	var params Dto.BrowseForum
+
+	params.Building = c.Query("building")
+	params.Search = c.Query("search")
+
+	browse, err := repo.BrowseForum(params)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"status": "error", "message": "Data not found"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"status": "error", "message": err.Error()})
+		}
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "success", "forum": browse})
+}
+
 func DetailForum(c *gin.Context) {
 	idParam := c.Param("id")
 	id, err := strconv.ParseInt(idParam, 10, 64)

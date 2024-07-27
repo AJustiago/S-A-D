@@ -1,5 +1,10 @@
 package Dto
 
+type BrowseForum struct {
+	Search   string `json:"search"`
+	Building string `json:"content"`
+}
+
 type CreateForum struct {
 	Title    string `json:"title" validate:"required"`
 	Content  string `json:"content" validate:"required"`

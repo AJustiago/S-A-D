@@ -1,9 +1,56 @@
 package forums
 
 import (
+	"fmt"
 	Config "hackjakarta/Config"
 	"hackjakarta/Dto"
 )
+
+func BrowseForum(params Dto.BrowseForum) (result []Forum, err error) {
+	var forumData Forum
+	const query = `SELECT
+						A.id,
+						A.title,
+						A.content,
+						A.building,
+						A.user_id,
+						B.username,
+						A.created_time,
+						(SELECT COUNT(*) FROM replies A1 WHERE A1.forum_id = A.id AND A1.reply_id IS NULL) AS reply_count
+					FROM public.forums A
+					JOIN users B ON A.user_id = B.id
+					WHERE ($1 = '' OR $1 = A.building)
+					AND COALESCE(A.title, '') ILIKE $2`
+
+	rows, err := Config.DB.Query(
+		query,
+		params.Building,
+		fmt.Sprintf("%%%s%%", params.Search),
+	)
+	if err != nil {
+		return
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		if err = rows.Scan(
+			&forumData.Id,
+			&forumData.Title,
+			&forumData.Content,
+			&forumData.Building,
+			&forumData.UserId,
+			&forumData.Username,
+			&forumData.CreatedTime,
+			&forumData.ReplyCount,
+		); err != nil {
+			return
+		}
+		result = append(result, forumData)
+	}
+
+	return
+}
 
 func DetailForum(id int64) (result Forum, err error) {
 	const query = `SELECT
@@ -52,6 +99,7 @@ func DetailForumReplies(forumId int64) (result []ForumReply, err error) {
 					JOIN users B ON A.user_id = B.id
 					WHERE A.forum_id = $1 AND A.reply_id IS NULL
 					ORDER BY A.created_time DESC`
+
 	rows, err := Config.DB.Query(query, forumId)
 	if err != nil {
 		return
