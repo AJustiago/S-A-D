@@ -1,0 +1,35 @@
+.container-fluid {
+    margin-top: 12%;
+
+}
+.glassmorphism-card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.card-body {
+    text-align: center;
+}
+
+.text-start {
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-align: left;
+}
+
+.btn-color {
+    background-color: #8EA7E9;
+    color: #FFF2F2;
+}   
+
+
+.btn-color:hover {
+    background-color: #7286D3;
+    color: #FFF2F2;
+}   

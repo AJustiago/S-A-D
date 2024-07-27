@@ -1,0 +1,5 @@
+# Services Folder
+
+In this directory, you’ll find files responsible for handling API calls and other services. 
+
+Services keeps the implementation details of interacting with external resources, provides separation of concerns and code maintainability.
