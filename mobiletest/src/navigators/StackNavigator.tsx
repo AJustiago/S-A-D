@@ -11,8 +11,8 @@ const StackNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Panic" component={PanicScreen} options={{headerShown: false}} />
         <Stack.Screen name="Main" component={MainNavigator} options={{headerShown: false}} />
+        <Stack.Screen name="Panic" component={PanicScreen} options={{headerShown: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

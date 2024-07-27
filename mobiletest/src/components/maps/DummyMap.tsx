@@ -1,5 +1,6 @@
 import React, {useRef} from 'react';
 import {
+  MappedinLocation,
   MapViewStore,
   MiMapView,
   TGetVenueOptions,
@@ -35,6 +36,19 @@ const DummyMap = () => {
           showBearing: true,
         });
         mapView.current?.overrideLocation(location);
+        const departure = mapView.current?.venueData?.locations.find(
+          (l: MappedinLocation) => l.name === 'Uniqlo',
+        );
+        const destination = mapView.current?.venueData?.locations.find(
+          (l: MappedinLocation) => l.name === 'Microsoft',
+        );
+        if (!departure || !destination) {
+          return;
+        }
+        const directions = departure?.directionsTo(destination);
+        if (directions) {
+          mapView.current?.Journey.draw(directions);
+        }
       }}
       onClick={({position}) => {
         console.log(position);
