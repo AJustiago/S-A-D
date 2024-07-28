@@ -1,24 +1,33 @@
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import React, {useRef, useState} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import OnlineMap from '../components/maps/OnlineMap';
 import DummyMap from '../components/maps/DummyMap';
-import { NavigationProp } from '@react-navigation/native';
+import {NavigationProp} from '@react-navigation/native';
 
 const data = [
   {label: '1st floor', value: '1'},
   {label: '2nd floor', value: '2'},
 ];
 
-const MapScreen: React.FC<{navigation: NavigationProp<any>}> = ({navigation}) => {
+const MapScreen: React.FC<{navigation: NavigationProp<any>}> = ({
+  navigation,
+}) => {
   const [value, setValue] = useState<string>('2');
   const renderMap = () => {
     return (
       <View style={{height: '100%'}}>
-        <View style={{height: '100%', display: (value == '1' ? 'flex' : 'none')}}>
+        <View style={{height: '100%', display: value == '1' ? 'flex' : 'none'}}>
           <OnlineMap />
         </View>
-        <View style={{height: '100%', display: (value == '2' ? 'flex' : 'none')}}>
+        <View style={{height: '100%', display: value == '2' ? 'flex' : 'none'}}>
           <DummyMap />
         </View>
       </View>
@@ -52,15 +61,15 @@ const styles = StyleSheet.create({
   dropdown: {
     backgroundColor: 'white',
     position: 'absolute',
-    top: 50, // Adjust as needed
+    top: 30, // Adjust as needed
     left: 16, // Adjust as needed
     right: 16, // Adjust as needed
     height: 50,
-    borderColor: 'gray',
-    borderWidth: 0.5,
-    borderRadius: 8,
+    borderColor: 'black',
+    borderWidth: 0.8,
+    borderRadius: 24,
     paddingHorizontal: 16,
-    marginHorizontal: 72,
+    marginLeft: 220,
   },
   icon: {
     marginRight: 5,
