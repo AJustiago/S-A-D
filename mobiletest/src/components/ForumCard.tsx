@@ -1,8 +1,6 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import SweetAlert from 'react-native-sweet-alert';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 interface CardProps {
@@ -18,33 +16,31 @@ const Card: React.FC<CardProps> = ({ username, title, description, count, upCoun
   const navigation = useNavigation();
 
   const handleMessageClick = async () => {
-    try {
-      const jwtToken = await AsyncStorage.getItem('jwt');
+    // try {
+      // const jwtToken = await AsyncStorage.getItem('jwt');
 
-      if (jwtToken) {
-        console.log('JWT Token exists:', jwtToken);
-        SweetAlert.showAlertWithOptions({
-          title: 'Success',
-          subTitle: 'JWT Token exists',
-          style: 'success',
-        });
-      } else {
-        console.log('JWT Token does not exist');
-        SweetAlert.showAlertWithOptions({
-          title: 'Error',
-          subTitle: 'Please log in to continue',
-          style: 'error',
-        });
-        navigation.navigate('Login');
-      }
-    } catch (error) {
-      console.error('Error checking JWT token:', error);
-      SweetAlert.showAlertWithOptions({
-        title: 'Error',
-        subTitle: 'An unexpected error occurred',
-        style: 'error',
-      });
+      // if (jwtToken) {
+      //   console.log('JWT Token exists:', jwtToken);
+    if (count > 0){
+      navigation.navigate('Detail');
     }
+    //   } else {
+    //     console.log('JWT Token does not exist');
+    //     SweetAlert.showAlertWithOptions({
+    //       title: 'Error',
+    //       subTitle: 'Please log in to continue',
+    //       style: 'error',
+    //     });
+    //     navigation.navigate('Login');
+    //   }
+    // } catch (error) {
+    //   console.error('Error checking JWT token:', error);
+    //   SweetAlert.showAlertWithOptions({
+    //     title: 'Error',
+    //     subTitle: 'An unexpected error occurred',
+    //     style: 'error',
+    //   });
+    
   };
 
   return (
@@ -98,7 +94,6 @@ const styles = StyleSheet.create({
   cardDescription: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 10,
   },
   bottomLeftContainer: {
     flexDirection: 'row',
@@ -109,7 +104,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     marginBottom: 10,
-    marginTop: 20,
+    marginTop: 10,
     width: 40,
   },
   countText: {
@@ -123,6 +118,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     right: 10,
     alignItems: 'center',
+
   },
   iconContainer1: {
     flexDirection: 'row',
@@ -133,7 +129,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   iconContainer2: {
     flexDirection: 'row',
@@ -144,7 +140,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderWidth: 1,
     borderColor: '#ddd',
-    marginBottom: 5,
+    marginBottom: 10,
   },
 });
 
