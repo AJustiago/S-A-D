@@ -3,105 +3,93 @@ export interface ForumPost {
     id: number;
     title: string;
     description: string;
-    upCount: number,
-    downCount: number,
+    upCount: number;
+    downCount: number;
     count: number;
+}
+
+export interface ForumDetail {
+    username: string;
+    id: number;
+    title: string;
+    description: string;
+    upCount: number;
+    downCount: number;
+    count: number;
+    reply: ForumPost[]
 }
 
 const dummyData: ForumPost[] = [
 {
-    username: 'A',
+    username: 'John Doe',
     id: 1,
     title: 'Stairwell door stuck',
     description: 'Emergency stairwell door in tower C is stuck.',
-    upCount: 1,
-    downCount: 2,
-    count: 3,
-},
-{
-    username: 'A',
-    id: 2,
-    title: 'Missing fire extinguisher',
-    description: 'Hooks are a new feature in React that let you use state and other React features without writing a class.',
-    upCount: 1,
-    downCount: 2,
-    count: 0,
-},
-{
-    username: 'A',
-    id: 3,
-    title: '',
-    description: 'Redux is a predictable state container for JavaScript apps, commonly used with React.',
-    upCount: 1,
-    downCount: 2,
+    upCount: 8,
+    downCount: 0,
     count: 2,
 },
 {
-    username: 'A',
-    id: 4,
-    title: 'Best practices for React Native development',
-    description: 'Learn about best practices to optimize your React Native applications for performance and maintainability.',
-    upCount: 1,
-    downCount: 2,
-    count: 1,
-},
-{
-    username: 'A',
-    id: 5,
-    title: 'What is Expo?',
-    description: 'Expo is a framework and a platform for universal React applications, providing a set of tools and services for building, deploying, and developing React Native apps.',
-    upCount: 1,
+    username: 'Lenny',
+    id: 2,
+    title: 'Missing fire extinguisher',
+    description: 'In Floor 10th tower C missing fire extinguisher',
+    upCount: 5,
     downCount: 2,
     count: 0,
 },
 {
-    username: 'A',
-    id: 6,
-    title: 'What is React Native?',
-    description: 'React Native is a popular framework for building mobile applications using React.',
-    upCount: 1,
-    downCount: 2,
-    count: 0,
-},
-{
-    username: 'A',
-    id: 7,
-    title: 'How to use Hooks in React?',
-    description: 'Hooks are a new feature in React that let you use state and other React features without writing a class.',
-    upCount: 1,
-    downCount: 2,
-    count: 0,
-},
-{
-    username: 'A',
-    id: 8,
-    title: 'Understanding Redux',
-    description: 'Redux is a predictable state container for JavaScript apps, commonly used with React.',
-    upCount: 1,
-    downCount: 2,
-    count: 0,
-},
-{
-    username: 'A',
-    id: 9,
-    title: 'Best practices for React Native development',
-    description: 'Learn about best practices to optimize your React Native applications for performance and maintainability.',
-    upCount: 1,
-    downCount: 2,
-    count: 0,
-},
-{
-    username: 'A',
-    id: 10,
-    title: 'What is Expo?',
-    description: 'Expo is a framework and a platform for universal React applications, providing a set of tools and services for building, deploying, and developing React Native apps.',
-    upCount: 1,
+    username: 'Jane Doe',
+    id: 3,
+    title: 'Emergency Exit Stuck',
+    description: 'Tower B Emerygency Exit can\'t Open',
+    upCount: 3,
     downCount: 2,
     count: 0,
 },
 ];
 
+
+const dummyDetail: ForumDetail =
+{
+    username: 'John Doe',
+    id: 1,
+    title: 'Stairwell door stuck',
+    description: 'Emergency stairwell door in tower C is stuck.',
+    upCount: 8,
+    downCount: 0,
+    count: 2,
+    reply: [
+        {
+            username: 'Jack',
+            id: 1,
+            title: 'Stairwell door stuck',
+            description: 'Yes, i\'ve been visited there before and it stuck',
+            upCount: 3,
+            downCount: 0,
+            count: 0,
+        },
+        {
+            username: 'Erica',
+            id: 2,
+            title: 'Stairwell door stuck',
+            description: 'it has been more than a week',
+            upCount: 1,
+            downCount: 0,
+            count: 0,
+        }
+    ]
+}
+
+
+
 export const fetchForumData = async (): Promise<ForumPost[]> => {
     await new Promise(resolve => setTimeout(resolve, 1000));
     return dummyData;
 };
+
+
+export const fetchForumDetail = async (): Promise<ForumDetail> => {
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    return dummyDetail;
+}
