@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/ForumCard';
 import { fetchForumData, ForumPost } from '../services/ForumServices';
@@ -43,7 +43,7 @@ const ForumScreen: React.FC = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Button onPress={() => navigation.navigate('Panic')} title="(TEMP) Test Panic Screen"/>
+      {/* <Button onPress={() => navigation.navigate('Panic')} title="(TEMP) Test Panic Screen"/> */}
       <Text style={styles.headerText}>Forum Discussion</Text>
       <View style={styles.header}>
         <View style={styles.searchContainer}>
@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    borderWidth: 1,
-    borderColor: '#000',
+    backgroundColor: '#7286D3',
+    color:'#fff',
     borderRadius: 20,
     paddingHorizontal: 15,
     paddingVertical: 10,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: '#000',
+    color: '#fff',
     fontSize: 16,
   },
   content: {

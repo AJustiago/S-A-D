@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import Card from '../components/ForumCard';
 import { fetchForumDetail, ForumDetail } from '../services/ForumServices';
@@ -29,7 +29,7 @@ const DetailScreen: React.FC = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Button onPress={() => navigation.navigate('Panic')} title="(TEMP) Test Panic Screen" />
+            {/* <Button onPress={() => navigation.navigate('Panic')} title="(TEMP) Test Panic Screen" /> */}
             {data && (
                 <>
                     <View style={styles.card}>
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        color: '#000'
     },
     headerContainer: {
         flexDirection: 'row',
@@ -206,7 +207,7 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         borderRadius: 5,
         marginRight: 10,
-        backgroundColor: '#fff'
+        color:'#000'
     },
     postButton: {
         paddingVertical: 10,
@@ -215,8 +216,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     postButtonText: {
-        color: '#fff',
         fontWeight: 'bold',
+        color:'#ffffff'
     },
 });
 

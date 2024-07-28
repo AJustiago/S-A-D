@@ -1,31 +1,19 @@
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TextInput, View } from 'react-native';
 
-const getRandomProfileImage = () => {
-  const images = [
-    require('../assets/profile-1.png'),
-    require('../assets/profile-2.png'),
-    require('../assets/profile-3.png'),
-  ];
-  const randomNumber = Math.floor(Math.random() * images.length);
-  return images[randomNumber];
-};
-
 const ProfileScreen = () => {
-  const profileImageSource = getRandomProfileImage();
-
   const userData = {
-    firstName: 'John',
-    lastName: 'Doe',
-    username: 'johndoe123',
-    email: 'john.doe@example.com',
+    firstName: 'Daniel',
+    lastName: 'Santiago',
+    username: 'DanielS',
+    email: 'DanSan321@gmail.com',
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.imageContainerWrapper}>
         <View style={styles.imageContainer}>
-          <Image source={profileImageSource} style={styles.profileImage} />
+          <Image source={require('../assets/profile.png')} style={styles.profileImage} />
         </View>
       </View>
       <View style={styles.dataContainer}>
@@ -71,19 +59,18 @@ const { height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
-    color: '#7286D3'
+    backgroundColor: '#F8F8F8',
   },
   imageContainerWrapper: {
-    height: height / 2,
-    backgroundColor: '#E5E0FF',
+    height: height / 2.7,
+    backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomLeftRadius: 32,
     borderBottomRightRadius: 32,
   },
   imageContainer: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 64,
@@ -96,7 +83,7 @@ const styles = StyleSheet.create({
   dataContainer: {
     marginTop: 20,
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#F8F8F8',
     padding: 16,
   },
   field: {
@@ -108,18 +95,17 @@ const styles = StyleSheet.create({
     width: 120,
     fontWeight: 'bold',
     fontSize: 16,
-    color: '#7286D3'
+    color: '#000'
   },
   input: {
     flex: 1,
     height: 40,
-    borderColor: '#7286D3',
-    color: '#7286D3',
+    borderColor: '#000',
+    color: '#000',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 8,
     fontSize: 16,
-    backgroundColor: '#FFF2F2',
   },
 });
 
